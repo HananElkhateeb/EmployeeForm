@@ -37,6 +37,14 @@ namespace EmployeeForm.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Employee employee = _employeeService.GetEmployeeById(id.Value);
+            foreach(EmployeeSkill employeeSkill in db.EmployeeSkills){
+                if(employeeSkill.EmployeeID == employee.Id)
+                {
+                    Skill s = new Skill();
+                    s.SkillName = employeeSkill.SkillName;
+                    employee.EmpSkills.Add(s);
+                }
+            }
             if (employee == null)
             {
                 return HttpNotFound();
@@ -47,6 +55,7 @@ namespace EmployeeForm.Controllers
         // GET: Employee/Create
         public ActionResult Create()
         {
+            ViewBag.skillList = new MultiSelectList(_skillService.GetAll(), "Id", "SkillName");
             return View();
         }
 
@@ -55,14 +64,26 @@ namespace EmployeeForm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,EmployeeName,EmployeeEmail,CreatedDate,CreatedBy,UpdatedDate,UpdatedBy")] Employee employee)
+        public ActionResult Create(Employee employee)
         {
             if (ModelState.IsValid)
             {
                 _employeeService.Create(employee);
+                string[] empSkills = employee.SelectedSkills;
+                if (employee.SelectedSkills != null)
+                {
+                    foreach (string skill in empSkills)
+                    {
+                        EmployeeSkill employeeSkill = new EmployeeSkill();
+                        employeeSkill.SkillID = Int16.Parse(skill);
+                        employeeSkill.SkillName = _skillService.GetSkillById(Int16.Parse(skill)).SkillName;
+                        employeeSkill.EmployeeID = employee.Id;
+                        db.EmployeeSkills.Add(employeeSkill);
+                    }
+                }
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(employee);
         }
 
@@ -78,6 +99,16 @@ namespace EmployeeForm.Controllers
             {
                 return HttpNotFound();
             }
+            List<string> skillsList = new List<string>();
+            foreach(EmployeeSkill es in db.EmployeeSkills)
+            {
+                if(es.EmployeeID == employee.Id)
+                {
+                    skillsList.Add(es.SkillID.ToString());
+                }
+            }
+            employee.SelectedSkills = skillsList.ToArray();
+            ViewBag.skillList = new MultiSelectList(_skillService.GetAll(), "Id", "SkillName");
             return View(employee);
         }
 
@@ -86,8 +117,30 @@ namespace EmployeeForm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,EmployeeName,EmployeeEmail,CreatedDate,CreatedBy,UpdatedDate,UpdatedBy")] Employee employee)
+        public ActionResult Edit(Employee employee)
         {
+            string[] empSkills = employee.SelectedSkills;
+            foreach(EmployeeSkill employeeSkill in db.EmployeeSkills)
+            {
+                if(employeeSkill.EmployeeID == employee.Id)
+                {
+                    db.EmployeeSkills.Remove(employeeSkill);
+                }
+            }
+
+            if (employee.SelectedSkills != null)
+            {
+                foreach (string skill in empSkills)
+                {
+                    EmployeeSkill employeeSkill = new EmployeeSkill();
+                    employeeSkill.SkillID = Int16.Parse(skill);
+                    employeeSkill.SkillName = _skillService.GetSkillById(Int16.Parse(skill)).SkillName;
+                    employeeSkill.EmployeeID = employee.Id;
+                    db.EmployeeSkills.Add(employeeSkill);
+                }
+            }
+            db.SaveChanges();
+
             if (ModelState.IsValid)
             {
                 _employeeService.Update(employee);

@@ -26,6 +26,24 @@
             @Html.DisplayFor(model => model.EmployeeEmail)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Skills)
+        </dt>
+
+        <dd>
+            <table class="table">
+                @foreach (var item in Model.EmpSkills)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SkillName)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+
+
     </dl>
 </div>
 <p>
