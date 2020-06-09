@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EmployeeForm.Repository
+namespace EmployeeForm.Service
 {
-    public interface IEmployeeRepository : IGenericRepository<Employee>
+   public interface IEmployeeService : IEntityService<Employee>
     {
         Employee GetEmployeeById(int id);
     }

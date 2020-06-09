@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EmployeeForm.Repository
+namespace EmployeeForm.Service
 {
-    public interface IEmployeeRepository : IGenericRepository<Employee>
+    public interface ISkillService : IEntityService<Skill>
     {
-        Employee GetEmployeeById(int id);
+        Skill GetSkillById(int id);
     }
 }

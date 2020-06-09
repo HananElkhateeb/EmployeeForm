@@ -41,7 +41,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmployeeService.cs" />
+    <Compile Include="EntityService.cs" />
+    <Compile Include="IEmployeeService.cs" />
+    <Compile Include="IEntityService.cs" />
+    <Compile Include="IService.cs" />
+    <Compile Include="ISkillService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SkillService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EmployeeForm.Model\EmployeeForm.Model.csproj">
+      <Project>{099F00A7-AD2F-47B8-A950-2ECA4F4AFCB6}</Project>
+      <Name>EmployeeForm.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EmployeeForm.Repository\EmployeeForm.Repository.csproj">
+      <Project>{B553A939-A02F-4B30-A0C8-C43BF1C36FAC}</Project>
+      <Name>EmployeeForm.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
