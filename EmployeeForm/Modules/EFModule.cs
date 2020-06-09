@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using EmployeeForm.DAL;
+using EmployeeForm.Model;
 using EmployeeForm.Repository;
 using System;
 using System.Collections.Generic;

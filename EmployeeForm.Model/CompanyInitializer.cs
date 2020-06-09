@@ -1,10 +1,10 @@
-﻿using EmployeeForm.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace EmployeeForm.DAL
+namespace EmployeeForm.Model
 {
     public class CompanyInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<CompanyContext>
     {
