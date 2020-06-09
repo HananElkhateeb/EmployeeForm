@@ -13,6 +13,6 @@ namespace EmployeeForm.Model
         public string EmployeeName { get; set; }
         public string EmployeeEmail { get; set; }
 
-        public virtual ICollection<Skill> Skills { get; set; }
+        public virtual IEnumerable<Skill> Skills { get; set; }
     }
 }

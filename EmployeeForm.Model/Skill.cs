@@ -9,6 +9,6 @@ namespace EmployeeForm.Model
     public class Skill : Entity<int>
     {
         public string SkillName { get; set; }
-        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual IEnumerable<Employee> Employees { get; set; }
     }
 }
